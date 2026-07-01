@@ -1,0 +1,673 @@
+%#!latexmk -pdfdvi -f main.tex
+%#LPR acroread %s
+
+\RequirePackage{plautopatch}
+\documentclass[paper=a4,
+fontsize=12pt,
+reqno,
+uplatex,
+dvipdfmx]{jlreq}
+%
+\jlreqsetup{
+thebibliography_heading={\section*{\refname}},
+}
+
+%
+%%%%%%%%%%%%%%% Include Package file %%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{mathrsfs}
+\usepackage{graphicx,color}
+\usepackage{newtxtext}
+\usepackage[varg]{newtxmath}
+\usepackage[shortlabels]{enumitem}
+\usepackage[haranoaji]{pxchfon}
+
+\usepackage[alphabetic, y2k]{amsrefs}
+%
+%%%%%%%%%%%%%%% Paper size settings %%%%%%%%%%%%%%%
+%
+%
+\usepackage{geometry}%
+\geometry{left=20mm,right=20mm,top=15mm,bottom=25mm}
+\geometry{a4paper}
+%
+
+%%%%%%%%%%%%%%% mathtools %%%%%%%%%%%%%%%
+%
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs=true}
+%
+%
+%
+%%%%%%%%%%%%%%% hyperref %%%%%%%%%%%%%%%
+%
+\usepackage{hyperref}
+\usepackage{pxjahyper}
+%
+%
+%
+%%%%%%%%%%%%%%% Setting of Theorem-like environment %%%%%%%%%%%%%%%
+% [Italic font in Theorem-like environment]
+%\theoremstyle{definition} % if change the roman font
+\theoremstyle{definition} % Change the Roman font
+%\newtheorem{definition}{定義}[chapter]
+\newtheorem{theorem}{定理}
+\newtheorem{proposition}[theorem]{命題}
+\newtheorem{lemma}[theorem]{補題}
+\newtheorem{corollary}[theorem]{系}
+\newtheorem{problem}{問題}
+\newtheorem{example}{例}
+\newtheorem*{definition}{定義}
+\newtheorem*{remark}{注意}
+%
+ 
+%
+%%%%%%%%%% Proof %%%%%
+\renewcommand{\proofname}{証明}  
+% ((Use the environment in proof))
+% \begin{proof}
+% \end{proof}
+% white box in the end of proof
+%
+%
+% make new QED
+% \QED{foo}
+% we write a black box in the right and output foo after the black box
+\newcommand{\QED}[1]{\hfill$\blacksquare$ #1\par}
+% 
+%
+%
+%%%%%%%%% 1.1 times Line stretch %%%%%%%%%
+% If you do not use Japanese, that command should be commented out.
+%
+%
+%%%%%%% Mathematical symbols %%%%%%%%%%%%%
+%
+\input{mymacro.tex}
+%
+%%%%%%%%%%%%%%% Counter setting in the equation's reference %%%%%%%%%%%%%%%
+% For amsart, use this counter setting
+%
+%
+%%% Definition of the \section (not use the \scshape)
+%
+%
+%\usepackage{input/myamssec}
+%
+%%% \par after proofname
+%
+%\usepackage{input/myamspf}
+%
+%%% \par after theorem environment
+%
+%\usepackage{input/myamsthm}
+%
+
+%%%%%%%%%% Framed settings %%%%%
+%
+%\definecolor{shadecolor}{gray}{0.9}
+%\newenvironment{shadedf}{%
+%  \def\FrameCommand{\fcolorbox{white}{shadecolor}}%
+%  \MakeFramed {\advance\hsize-\width \FrameRestore}%
+%  }%
+%{\endMakeFramed}
+%
+%
+%
+
+
+%%%%%%%%%%%%%%% temporary Package %%%%%%%%%%%%%%%
+
+\usepackage[inline,right]{showlabels}   % Output of cite and reference
+
+%\usepackage{showkeys}   % Output of cite and reference
+%\usepackage{refcheck}   % check of no uselabel 
+
+%%%%%%%%%%%%%%% title Setting %%%%%%%%%%%%%%%
+%
+\title{拡散方程式に対する自己相似変換}
+\author{}
+%
+%
+%%%%%%%%%%%%%%% page style setting %%%%%%%%%%%%%%%
+%
+\allowdisplaybreaks[1]
+\DeclareMathOperator{\rot}{rot}
+\let\Re\relax
+\let\Im\relax
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Im}{Im}
+
+\usepackage{bm}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+
+%
+%%%%%%%%%%%%%%% end preamble %%%%%%%%%%%%%%%
+%
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ このノートは\cite{MR2656972}をもとにしたものである．
+\end{abstract}
+
+
+$n$ 次元 Euclid 空間 $\mathbb{R}^n$ における拡散方程式
+\begin{equation}
+ \label{eq:DiffusionEquation}
+ \frac{\partial u}{\partial t}(x, t)
+  -
+  \Delta u(x, t) = 0, 
+  \quad x \in \mathbb{R}^n,
+  \, t > 0 \tag{D}
+\end{equation}
+を考える．$\lambda > 0$ に対し、スケール変換
+\begin{equation}
+ \label{eq:Self-Similar-scale-transform}
+ \tilde{u}_{\lambda}(\tilde{x}, \tilde{t})
+  =
+  \lambda^{-\frac{n}{2}} u(x, t), 
+  \quad 
+  \tilde{x} = \lambda x, \, \tilde{t} = \lambda^2 t
+\end{equation}
+を導入する．
+
+\begin{proposition}
+ $u: \mathbb{R}^n \times (0, \infty) \rightarrow \mathbb{R}$と$\lambda >
+ 0$ に対して、$\tilde{u}_{\lambda}$
+ を~\eqref{eq:Self-Similar-scale-transform}で定める．
+ \begin{enumerate}
+  \item 任意の $\lambda > 0$ に対して、次が成り立つ: 
+   \begin{equation}
+    \int_{\mathbb{R}^n} 
+     u(x, t)
+     \, dx 
+     = 
+     \int_{\mathbb{R}^n}
+     \tilde{u}_{\lambda}(\tilde{x}, \tilde{t})
+     \, 
+     d\tilde{x}
+   \end{equation}
+  \item $u$ が \eqref{eq:DiffusionEquation} を満たすならば、任意の
+	$\lambda > 0$ に対して，$\tilde{u}_{\lambda}$ も次の拡散方程式の
+	解となる: 
+	\begin{equation}
+	 \frac{\partial \tilde{u}_{\lambda}}{\partial \tilde{t}}
+	  (\tilde{x}, \tilde{t}) 
+	  -
+	  \Delta_{\tilde{x}} \tilde{u}_{\lambda}
+	  (\tilde{x}, \tilde{t})
+	  =
+	  0,
+	  \quad
+	  \tilde{x} \in \mathbb{R}^n, \, 
+	  \tilde{t} > 0.
+	\end{equation}
+ \end{enumerate}
+\end{proposition}
+
+さて，$u$ を \eqref{eq:DiffusionEquation} の解とするとき，全ての
+$\lambda > 0$ に対して
+\begin{equation}
+ \lambda^{-\frac{n}{2}}
+  u
+  \left(
+   \frac{x}{\lambda}, 
+   \frac{t}{\lambda^2}
+  \right)
+  =
+  u(x, t), \quad \forall x \in \mathbb{R}^n, \, t > 0
+\end{equation}
+となる関数があったとすると(自己相似解という)，$\lambda =
+\frac{1}{\sqrt{t}}$ とおくことで
+\begin{equation}
+ t^{-\frac{n}{2}} u\left(\frac{x}{\sqrt{t}}, 1\right) = u(x, t), \quad x \in \mathbb{R}^n, \, t > 0
+\end{equation}
+がわかる．そこで，新しい変数 $y = \frac{x}{\sqrt{t}}$ を導入して
+\begin{equation}
+ u(x, t)
+  =
+  t^{-\frac{n}{2}}
+  \tilde{v}(y, t),
+  \quad
+  y = \frac{x}{\sqrt{t}}
+\end{equation}
+とおく．
+
+\begin{proposition}
+ $u: \mathbb{R}^n \times (0, \infty) \rightarrow \mathbb{R}$
+ に対し，
+ $\tilde{v}$ を上記で定める．このとき，全ての $t > 0$ に対して次が成り立つ:
+ \begin{equation}
+  \int_{\mathbb{R}^n} u(x, t) \, dx 
+   =
+   \int_{\mathbb{R}^n} \tilde{v}(y, t) \, dy.
+ \end{equation}
+\end{proposition}
+
+次に，$u$ が \eqref{eq:DiffusionEquation} を満たすときの $\tilde{v}$ の
+満たす方程式を導出しよう．
+\begin{align}
+ \frac{\partial u}{\partial t}(x, t)
+ &=
+ \frac{\partial}{\partial t}
+ \left(
+ t^{-\frac{n}{2}} \tilde{v}\left(\frac{x}{\sqrt{t}}, t\right) \right) \tag{592} \\
+ &= -\frac{n}{2} t^{-\frac{n}{2}-1} \tilde{v}(y, t) - \frac{1}{2} t^{-\frac{n}{2}-1} y \cdot (\nabla_y \tilde{v})(y, t) + t^{-\frac{n}{2}} \frac{\partial \tilde{v}}{\partial t}(y, t),
+\end{align}
+かつ
+\begin{equation}
+ \Delta_x u(x, t)
+  = 
+  \Delta_x
+  \left(
+   t^{-\frac{n}{2}}
+   \tilde{v}\left(\frac{x}{\sqrt{t}}, t\right) 
+  \right)
+  =
+  t^{-\frac{n}{2}-1} 
+  (\Delta_y \tilde{v})(y, t)
+\end{equation}
+を~\eqref{eq:DiffusionEquation}に代入して整理すると
+\begin{equation}
+ t \frac{\partial \tilde{v}}{\partial t}(y, t)
+  -
+  (\Delta_y \tilde{v})(y, t)
+  -
+  \frac{1}{2} y \cdot \nabla_y \tilde{v}(y, t)
+  -
+  \frac{n}{2} \tilde{v}(y, t) = 0 
+\end{equation}
+となる．ここで，
+\begin{equation}
+ \Div_y
+  \left(
+   \frac{1}{2}
+   y
+   \tilde{v}(y, t)
+  \right)
+  =
+  \frac{n}{2}
+  \tilde{v}(y, t)
+  + 
+  \frac{1}{2}
+  y
+  \cdot
+  \nabla_y
+  \tilde{v}(y, t)
+\end{equation}
+に注目すると，
+\begin{equation}
+ t \frac{\partial \tilde{v}}{\partial t}(y, t)
+  -
+  (\Delta_y \tilde{v})(y, t)
+  -
+  \Div_y 
+  \left(
+   \frac{1}{2}
+   \tilde{v}(y, t)
+   y
+  \right)
+  = 0
+\end{equation}
+が得られる．
+
+さらに，時間変数を変換するために $s = \log t$ という変数変換を導入する．
+\begin{equation}
+ v(y, s)
+  =
+  \tilde{v}(y, t), 
+  \quad s = \log t
+\end{equation}
+とおくと，
+\begin{equation}
+ \frac{\partial \tilde{v}}{\partial t}(y, t)
+  =
+  \frac{\partial}{\partial t} v(y, \log t)
+  = 
+  \frac{\partial v}{\partial s}(y, s) \frac{1}{t}
+\end{equation}
+となるから
+\begin{equation}
+ \frac{\partial v}{\partial s}(y, s)
+  -
+   (\Delta_y v)(y, s)
+   - 
+   \text{div}_y 
+   \left(
+    \frac{1}{2} v(y, s) y
+   \right)
+   =
+   0, \quad y \in \mathbb{R}^n, \, s \in \mathbb{R}
+\end{equation}
+が得られる．
+
+\begin{definition}
+ $u: \mathbb{R}^n \times (0, \infty) \rightarrow \mathbb{R}$ に対し、
+ \begin{equation}
+  u(x, t)
+   = 
+   t^{-\frac{n}{2}}
+   v(y, s), 
+   \quad 
+   y = \frac{x}{\sqrt{t}}, \, s = \log t
+ \end{equation}
+ で定まる変換を，~\eqref{eq:DiffusionEquation} に関する\textbf{前向自己
+ 相似変換（forward self-similar transformation）}という．
+\end{definition}
+
+\begin{proposition}
+ $u: \mathbb{R}^n \times (0, \infty) \rightarrow \mathbb{R}$ に対し，
+ 次が成り立つ．
+ \begin{enumerate}
+  \item 全ての $t > 0$ に対し、
+	\begin{equation}
+	 \int_{\mathbb{R}^n} u(x, t) \, dx = \int_{\mathbb{R}^n} v(y, s) \, dy
+	\end{equation}
+  \item $u$ が \eqref{eq:DiffusionEquation} を満たすならば，
+	\begin{equation}
+	 \frac{\partial v}{\partial s}(y, s)
+	  -
+	  (\Delta_y v)(y, s)
+	  -
+	  \Div_y
+	  \left(
+	   \frac{1}{2} v(y, s) y
+	  \right)
+	  =
+	  0, 
+	  \quad y \in \mathbb{R}^n, 
+	  \, s \in \mathbb{R}
+	\end{equation}
+	が成り立つ．
+ \end{enumerate}
+\end{proposition}
+
+さて，$u$ を正値とすると，前向自己相似変換 $v$ もまた正値となる．
+このとき，方程式は次のように変形できる: 
+\begin{align}
+ \frac{\partial v}{\partial s}(y,s)
+ &=
+ \Delta v(y,s)
+ +
+ \text{div} 
+ \left(
+ \frac{1}{2} v(y, s) y
+ \right) \\
+ &= \Div
+ \left(
+ \nabla v(y, s)
+ + 
+ \frac{1}{2} v(y, s) y
+ \right) \\
+ &= \Div
+ \left(
+ v(y, s)
+ \nabla
+ \left( 
+ \log v(y, s) + \frac{1}{4} |y|^2
+ \right) 
+ \right)
+\end{align}
+天下りではあるが，次のエネルギーの微分を計算してみる:
+\begin{align}
+ &\quad
+ \frac{d}{ds}
+  \int_{\mathbb{R}^n}
+  \left( 
+  (\log v(y, s) - 1)
+  + 
+  \frac{1}{4} |y|^2
+  \right)
+  v(y, s)
+  \, dy
+ \\
+  &=
+  \int_{\mathbb{R}^n} 
+  \left(
+  \log v(y, s) + \frac{1}{4} |y|^2 
+  \right)
+  \frac{\partial v}{\partial s}(y,s)
+  \, dy
+  \\
+  &=
+  \int_{\mathbb{R}^n}
+  \left(
+  \log v(y, s) + \frac{1}{4} |y|^2 
+  \right) 
+  \Div
+  \left(
+  v(y,s)
+  \nabla 
+  \left(
+  \log v(y,s)
+  + 
+  \frac{1}{4} |y|^2
+  \right)
+  \right)
+  \,dy
+ \end{align}
+これに部分積分の公式を用いると，$v$ が無限遠で十分に早く減衰していれば，
+境界項は $0$ となるため，
+\begin{equation}
+ \frac{d}{ds} 
+  \int_{\mathbb{R}^n}
+  \left(
+   (\log v(y, s) - 1) + \frac{1}{4} |y|^2
+  \right)
+  v(y, s)
+  \, dy 
+  =
+  -\int_{\mathbb{R}^n}
+  \left|
+   \nabla 
+   \left( 
+    \log v(y, s) + \frac{1}{4} |y|^2
+   \right) 
+  \right|^2 v(y, s)
+  \, dy
+\end{equation}
+となる．さらに，時間変数について積分することで，次の自然境界条件の下での
+エネルギー等式が得られる:
+\begin{multline}
+ \int_{\mathbb{R}^n}
+ \left( 
+ (\log v(y, s) - 1) + \frac{1}{4} |y|^2
+ \right) v(y, s)
+ \, dy
+ +
+ \int_{0}^s
+ \left(
+ \int_{\mathbb{R}^n}
+ \left|
+ \nabla 
+ \left(
+ \log v(y, \tau)
+ + 
+ \frac{1}{4} |y|^2 
+ \right)
+ \right|^2
+ v(y, \tau)
+ \, dy 
+ \right)
+ d\tau \\
+ = 
+ \int_{\mathbb{R}^n}
+ \left( 
+ (\log v(y, 0) - 1) + \frac{1}{4} |y|^2
+ \right)
+ v(y, 0)
+ \, dy 
+\end{multline}
+このことから，$s \rightarrow \infty$ としたとき，
+\begin{equation}
+ \nabla
+  \left(
+   \log v(y, s)
+   +
+   \frac{1}{4} |y|^2
+  \right) 
+  \rightarrow 
+  0
+\end{equation}
+となることが示唆される．したがって，$\log v(y, s) + \frac{1}{4} |y|^2$
+が定数に収束すればよいことから，
+\begin{equation}
+ v(y, s) 
+  \rightarrow
+  C e^{-\frac{1}{4} |y|^2}
+  \quad 
+  s \rightarrow \infty
+\end{equation}
+となることが推察される．
+
+\begin{theorem}
+ $u$ を \eqref{eq:DiffusionEquation} の解とし，$v$ を $u$ の前向自己相似
+ 変換とする．定数 $C > 0$ に対し，
+ \begin{equation}
+  \| 
+   v(y, s)
+   -
+   C e^{-\frac{|y|^2}{4}}
+   \|_{L^p(\mathbb{R}_y^n)}
+   =
+   \phi(s)
+ \end{equation}
+ とおく．このとき，$t>0$に対して
+ \begin{equation}
+  \| 
+   u(x, t)
+   -
+   C t^{-\frac{n}{2}} e^{-\frac{|x|^2}{4t}}
+   \|_{L^p(\mathbb{R}_x^n)}
+   =
+   t^{-\frac{n}{2}
+   \left(1 - \frac{1}{p}
+   \right)}
+   \phi(\log t)
+ \end{equation}
+ が成り立つ．
+\end{theorem}
+
+\begin{proof}
+ 自己相似変換の定義より，
+ \begin{align}
+  \| 
+  v(y, s)
+  -
+  C e^{-\frac{|y|^2}{4}}
+  \|_{L^p(\mathbb{R}_y^n)}^p
+  &=
+  \int_{\mathbb{R}^n}
+  \left|
+  v(y, s)
+  -
+  C e^{-\frac{|y|^2}{4}}
+  \right|^p
+  \, dy \\
+  &= 
+  \int_{\mathbb{R}^n}
+  \left| 
+  t^{\frac{n}{2}} u(x, t) - C e^{-\frac{|y|^2}{4}}
+  \right|^p
+  \, dy \\
+  &=
+  \int_{\mathbb{R}^n} t^{\frac{np}{2}} 
+  \left| 
+  u(x, t)
+  -
+  C t^{-\frac{n}{2}} e^{-\frac{|y|^2}{4}}
+  \right|^p
+  \, dy
+ \end{align}
+ となる，ここで $y = \frac{x}{\sqrt{t}}$，$s = \log t$ と変数変換すると，
+ $dy = t^{-\frac{n}{2}} dx$ であるから，
+ \begin{align}
+  \| 
+  v(y, s)
+  -
+  C e^{-\frac{|y|^2}{4}} 
+  \|_{L^p(\mathbb{R}_y^n)}^p 
+  &=
+  t^{\frac{np}{2}} 
+  t^{-\frac{n}{2}}
+  \int_{\mathbb{R}^n}
+  \left|
+  u(x, t) - C t^{-\frac{n}{2}} e^{-\frac{|x|^2}{4t}}
+  \right|^p
+  \, dx \\
+  &=
+  t^{\frac{n}{2}(p - 1)} 
+  \int_{\mathbb{R}^n}
+  \left| 
+  u(x, t) - C t^{-\frac{n}{2}} e^{-\frac{|x|^2}{4t}}
+  \right|^p
+  \, dx
+ \end{align}
+ となる．両辺を $\frac{1}{p}$ 乗して整理すれば，
+ \begin{equation}
+  \|
+   u(x, t) 
+   -
+   C t^{-\frac{n}{2}} e^{-\frac{|x|^2}{4t}}
+   \|_{L^p(\mathbb{R}_x^n)}
+   = 
+   t^{-\frac{n}{2}\left(1 - \frac{1}{p}\right)} 
+   \|
+   v(y, s) - C e^{-\frac{|y|^2}{4}}
+   \|_{L^p(\mathbb{R}_y^n)}
+   = 
+   t^{-\frac{n}{2}\left(1 - \frac{1}{p}\right)} \phi(\log t) 
+ \end{equation}
+ が得られる．
+\end{proof}
+
+\section{応用}
+もし，ある定数 $C_1 > 0$ と $\lambda > 0$ に対して
+\begin{equation}
+ \|
+  v(y, s) - C e^{-\frac{|y|^2}{4}}
+  \|_{L^p(\mathbb{R}_y^n)}
+  \le
+  C_1 e^{-\lambda s} 
+\end{equation}
+なる評価が得られたとすると，
+\begin{equation}
+ \|
+  u(x, t) - C t^{-\frac{n}{2}} e^{-\frac{|x|^2}{4t}}
+  \|_{L^p(\mathbb{R}_x^n)}
+  \le
+  C_1 t^{-\frac{n}{2}
+  \left(
+   1 - \frac{1}{p}
+  \right)}
+  e^{-\lambda \log t}
+  =
+  C_1 t^{-\frac{n}{2}
+  \left(
+   1 - \frac{1}{p}
+  \right)
+  - \lambda}
+\end{equation}
+となる．つまり，$u(x, t)$ が十分大きな時間において Gauss 核（基本解）に
+漸近すること，およびその剰余項が代数的なオーダー $t^{-\lambda}$ で減衰す
+ることがわかる．
+
+
+
+% bibtex Settings
+\bibliography{references}
+%\bibliographystyle{myjalpha} % in Japanese
+
+%\bibliographystyle{amsplain} % not in Japanese
+
+
+\end{document}
+
+
+
+
+\end{document}

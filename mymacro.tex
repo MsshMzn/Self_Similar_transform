@@ -1,0 +1,44 @@
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator*{\osc}{osc}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator*{\essosc}{ess.osc}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Cplx}{\mathbb{C}}
+\newcommand{\Sp}{\mathbb{S}}
+\newcommand{\intmean}[1]{\,\rule[3pt]{10pt}{0.3pt}\hspace{-13pt}\int_{#1}}
+% integral mean
+% \intmean{D} is integral mean for D
+\newcommand{\iintmean}[1]{\,\rule[3pt]{20pt}{0.3pt}\hspace{-22pt}\iint_{#1}}
+% double integral mean
+% \iintmean{D} is integral mean for D
+%
+%
+%%%%%%%%%%%%%%% FRAME environment make a frame(similar to screen environment)
+\newenvironment{FRAME}{\begin{trivlist}\item[]
+ \hrule
+ \hbox to \linewidth\bgroup
+   \advance\linewidth by -30pt
+   \hsize=\linewidth
+   \vrule\hfill
+   \vbox\bgroup
+     \vskip15pt
+     \def\thempfootnote{\arabic{mpfootnote}}% footnote is arabic number
+     \begin{minipage}{\linewidth}}{%
+     \end{minipage}\vskip15pt
+   \egroup\hfill\vrule
+ \egroup\hrule
+\end{trivlist}}
+
